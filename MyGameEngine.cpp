@@ -3,7 +3,6 @@
 
 
 void MyGameEngine::idle(){
-
 	switch ((*etat_))
 	{
 	case MENU:
