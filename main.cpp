@@ -27,7 +27,6 @@ int main(int argc, char * argv[])
 	GameEngine * gme = new MyGameEngine(&gameManagemement, &square, &etat, &ia);
 	ControlEngine * ce = new MyControlEngine(&gameManagemement, &square, &etat, &ia);
 
-
 	e.setGraphicEngine(ge);
 	e.setGameEngine(gme);
 	e.setControlEngine(ce);
