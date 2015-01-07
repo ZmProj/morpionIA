@@ -3,6 +3,8 @@
 
 
 void MyControlEngine::MouseCallback(int button, int state, int x, int y){
+	bool isHumainToPlay;
+
 	int indiceY;
 	int indiceX;
 
@@ -54,7 +56,7 @@ void MyControlEngine::MouseCallback(int button, int state, int x, int y){
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && clickX >= -0.24f && clickX <= 0.24f && clickY >= -0.79f && clickY <= -0.61f){
 			(*gameManagement_).drawSquare();
 			// Si le joueur 1 n'est pas HUMAIN ou RANDOM (donc MIN-MAX ou ALPH-ABETA)
-			if ((*gameManagement_).getTypeJ1() != 0 && (*gameManagement_).getTypeJ1() != 1){
+			/*if ((*gameManagement_).getTypeJ1() != 0 && (*gameManagement_).getTypeJ1() != 1){
 				int firstIaPlayRows, firstIaPlayColumns;
 				// On cherche a jouer le meilleur premier coup pour l'IA 
 				// on joue donc au centre, une case avec un grand poids
@@ -75,14 +77,22 @@ void MyControlEngine::MouseCallback(int button, int state, int x, int y){
 				(*square_)[firstIaPlayRows][firstIaPlayColumns].changeColorJ1();
 				(*square_)[firstIaPlayRows][firstIaPlayColumns].setClickedBy(0);
 				(*etat_) = Etat::END_TURN;
-			}
+			}*/
 			*etat_ = INGAME;
 		}
 		break;
 	case INGAME:
 		indiceY = y / ((*square_)[0][0].getSide() * (600 / 2.f)) + 1;    // 600 correspond à la taille(height) de la fenêtre
 		indiceX = x / ((*square_)[0][0].getSide() * (600 / 2.f)) + 1; // 600 correspond à la taille(width) de la fenêtre
-		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (*gameManagement_).getSquare()[indiceY - 1][indiceX - 1].getClickedBy() == -1) {
+		if ((*gameManagement_).getTypeJ1() == 0 && (*gameManagement_).getCurrentPlayer() == 0 
+			|| (*gameManagement_).getTypeJ2() == 0 && (*gameManagement_).getCurrentPlayer() == 1){
+			isHumainToPlay = true;
+		}
+		else{
+			isHumainToPlay = false;
+			(*ia_).toPlay();
+		}
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (*gameManagement_).getSquare()[indiceY - 1][indiceX - 1].getClickedBy() == -1 && isHumainToPlay) {
 			if ((*gameManagement_).getCurrentPlayer() == 0){
 				(*square_)[indiceY - 1][indiceX - 1].changeColorJ1();
 				(*square_)[indiceY - 1][indiceX - 1].setClickedBy(0);

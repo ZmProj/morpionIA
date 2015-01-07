@@ -91,7 +91,6 @@ int GameManagement::verifVainqueurForIA(int x, int y, std::vector<std::vector <S
 	int xt = 0;
 	int yt = 0;
 
-
 	//vérification verticale
 	xt = x - 1;
 	yt = y;

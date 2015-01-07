@@ -34,14 +34,18 @@ void IA::iaRandom(){
 	/* generate secret number between 0 and casesLibres size: */
 	int aleaNumber = rand() % casesLibres.size();
 
-	(*square_)[casesLibres[aleaNumber].first][casesLibres[aleaNumber].second].changeColorJ2();
 	appliqueCoup(*square_, casesLibres[aleaNumber]);
+	appliqueCouleur(*square_, casesLibres[aleaNumber]);
 
-	if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == 1){
+	int type = (*square_)[casesLibres[aleaNumber].first][casesLibres[aleaNumber].second].getClickedBy();
+	(*etat_) = Etat::END_TURN;
+
+	if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == type){
 		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
+		std::cout << "etat: " << ((*etat_) == Etat::END_GAME) << std::endl;
 	}
-	else if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == 0){
+	else if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == ((type+1)%2)){
 		std::cout << "pas encore gagne" << std::endl;
 	}
 
@@ -51,14 +55,17 @@ void IA::iaMinMax(){
 
 	
 	valeurMinMax(*square_, true, 0, 5, lastCoupJoueur);
-	(*square_)[coupJoue.first][coupJoue.second].changeColorJ2();
 	appliqueCoup(*square_, coupJoue);
+	appliqueCouleur(*square_, coupJoue);
 
-	if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == 1){
+	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
+	(*etat_) = Etat::END_TURN;
+
+	if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == type){
 		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
 	}
-	else if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == 0){
+	else if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == ((type+1)%2)){
 		std::cout << "pas encore gagne" << std::endl;
 	}
 }
@@ -83,6 +90,15 @@ std::vector<std::pair<int, int>> IA::coupJouables(std::vector<std::vector <Squar
 
 void IA::appliqueCoup(std::vector<std::vector <Square > > &square, std::pair<int, int> coup){
 	square[coup.first][coup.second].setClickedBy((*gameManagement_).getCurrentPlayer());
+}
+
+void IA::appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup){
+	if ((*gameManagement_).getCurrentPlayer() == 0){
+		square[coup.first][coup.second].changeColorJ1();
+	}
+	else {
+		square[coup.first][coup.second].changeColorJ2();
+	}
 }
 
 int IA::valeurMinMax(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ){

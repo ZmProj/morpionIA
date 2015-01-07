@@ -43,5 +43,6 @@ public:
 	int estimation(std::vector<std::vector <Square> > &square);
 	int analyse(std::vector<std::vector <Square> > &square, int x, int y);
 	void setLastCoupJoueur(int x, int y);
+	void appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup);
 };
 
