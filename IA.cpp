@@ -36,6 +36,8 @@ void IA::iaRandom(){
 
 	appliqueCoup(*square_, casesLibres[aleaNumber]);
 	appliqueCouleur(*square_, casesLibres[aleaNumber]);
+	lastCoupJoueur = casesLibres[aleaNumber];
+
 
 	int type = (*square_)[casesLibres[aleaNumber].first][casesLibres[aleaNumber].second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -55,6 +57,7 @@ void IA::iaMinMax(){
 	valeurMinMax(*square_, true, 0, 2, lastCoupJoueur);
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
+	lastCoupJoueur = coupJoue;
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -372,6 +375,7 @@ void IA::calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	}
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
+	lastCoupJoueur = coupJoue;
 }
 
 int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta){

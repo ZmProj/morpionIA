@@ -1,20 +1,17 @@
-﻿La génération a démarré 08/01/2015 23:08:20.
-     1>Projet "C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\morpionIA\morpionIA.vcxproj" sur le nœud 2 (Build cible(s)).
+﻿La génération a démarré 08/01/2015 23:16:42.
+     1>Projet "C:\Users\Zizou\Documents\cpp\IAmorpion\morpionIA\morpionIA.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Zizou\Documents\cpp\uselibgraph\include /IC:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt IA.cpp MyControlEngine.cpp MyGameEngine.cpp main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Zizou\Documents\cpp\uselibgraph\include /IC:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt IA.cpp
          IA.cpp
-     1>IA.cpp(91): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(92): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(133): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(146): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(364): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(396): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(430): warning C4018: '<' : incompatibilité signed/unsigned
-         MyControlEngine.cpp
-         MyGameEngine.cpp
-         main.cpp
+     1>IA.cpp(94): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(95): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(136): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(149): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(367): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(400): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(434): warning C4018: '<' : incompatibilité signed/unsigned
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Zizou\Documents\cpp\uselibgraph\libwin /LIBPATH:C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\libWin engine.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.lib" /MACHINE:X86 /SAFESEH Release\GameManagement.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Zizou\Documents\cpp\IAmorpion\Release\morpionIA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Zizou\Documents\cpp\uselibgraph\libwin /LIBPATH:C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\libWin engine.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Zizou\Documents\cpp\IAmorpion\Release\morpionIA.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Zizou\Documents\cpp\IAmorpion\Release\morpionIA.lib" /MACHINE:X86 /SAFESEH Release\GameManagement.obj
          Release\IA.obj
          Release\main.obj
          Release\MyControlEngine.obj
@@ -24,14 +21,14 @@
          Release\utility.obj
          Génération de code en cours
          Fin de la génération du code
-     1>engine.lib(Engine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(Engine.obj)' ou sur 'C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
-     1>engine.lib(GameEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GameEngine.obj)' ou sur 'C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
-     1>engine.lib(ControlEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(ControlEngine.obj)' ou sur 'C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
-     1>engine.lib(GraphicEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GraphicEngine.obj)' ou sur 'C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
-     1>engine.lib(GraphicPrimitives.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GraphicPrimitives.obj)' ou sur 'C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
-         morpionIA.vcxproj -> C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.exe
-     1>Génération du projet "C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\morpionIA\morpionIA.vcxproj" terminée (Build cible(s)).
+     1>engine.lib(Engine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(Engine.obj)' ou sur 'C:\Users\Zizou\Documents\cpp\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
+     1>engine.lib(GameEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GameEngine.obj)' ou sur 'C:\Users\Zizou\Documents\cpp\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
+     1>engine.lib(ControlEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(ControlEngine.obj)' ou sur 'C:\Users\Zizou\Documents\cpp\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
+     1>engine.lib(GraphicEngine.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GraphicEngine.obj)' ou sur 'C:\Users\Zizou\Documents\cpp\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
+     1>engine.lib(GraphicPrimitives.obj) : warning LNK4099: PDB 'vc120.pdb' n'a pu être trouvé avec 'engine.lib(GraphicPrimitives.obj)' ou sur 'C:\Users\Zizou\Documents\cpp\IAmorpion\Release\vc120.pdb' ; l'objet sera lié sans informations de débogage
+         morpionIA.vcxproj -> C:\Users\Zizou\Documents\cpp\IAmorpion\Release\morpionIA.exe
+     1>Génération du projet "C:\Users\Zizou\Documents\cpp\IAmorpion\morpionIA\morpionIA.vcxproj" terminée (Build cible(s)).
 
 La génération a réussi.
 
-Temps écoulé 00:00:05.06
+Temps écoulé 00:00:01.33
