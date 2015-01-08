@@ -27,6 +27,8 @@ public:
 	{
 		lastCoupJoueur.first = 0;
 		lastCoupJoueur.second = 0;
+		coupJoue.first = -1;
+		coupJoue.second = -1;
 	}
 
 	int getIaType();
@@ -45,5 +47,8 @@ public:
 	void setLastCoupJoueur(int x, int y);
 	void appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup);
 	int valeurAlphaBeta(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int>, int, int);
+	void calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax);
+	int calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int>, int, int);
+	int calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int>, int, int);
 };
 

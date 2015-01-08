@@ -53,7 +53,7 @@ void IA::iaRandom(){
 void IA::iaMinMax(){
 
 	
-	valeurMinMax(*square_, true, 0, 5, lastCoupJoueur);
+	valeurMinMax(*square_, true, 0, 2, lastCoupJoueur);
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
 
@@ -70,9 +70,8 @@ void IA::iaMinMax(){
 }
 
 void IA::iaAlphaBeta(){
-	valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	appliqueCoup(*square_, coupJoue);
-	appliqueCouleur(*square_, coupJoue);
+	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
+	calcIA(*square_, true, 0, 5);
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -354,14 +353,37 @@ void IA::setLastCoupJoueur(int x, int y){
 	lastCoupJoueur.second = y;
 }
 
-int IA::valeurAlphaBeta(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta){
+void IA::calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax){
 	std::vector<std::pair<int, int>> coupJouable = coupJouables(square);
-	int best;
-	std::pair<int, int> bestCoup;
-	int value;
 	std::vector<int> tab_valeurs;
 	std::vector<std::pair<int, int>> coupAJoue;
 	std::vector<std::vector <Square > > squareNext;
+	int alpha = -INFINITY;
+	int beta = INFINITY;
+	int tmp;
+	if (prof != profMax || coupJouable.size() != 0 || (*gameManagement_).verifVainqueurForIA(coupJoue.first,coupJoue.second,square) == -1){
+		for (int i = 0; i < coupJouable.size(); i++){
+			jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
+			tmp = calcMin(squareNext, !ordi_joue, prof + 1, profMax, lastCoupJoueur, alpha, beta);
+			if (alpha < tmp){
+				alpha = tmp;
+				coupJoue = coupJouable[i];
+			}
+		}
+	}
+
+	appliqueCoup(*square_, coupJoue);
+	appliqueCouleur(*square_, coupJoue);
+}
+
+int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta){
+	std::vector<std::pair<int, int>> coupJouable = coupJouables(square);
+	int tmp;
+	std::vector<std::vector <Square > > squareNext;
+	if (prof == profMax){
+		tmp = estimation(square);
+		return tmp;
+	}
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
 		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
 			return 1000 - comptePions(square);
@@ -373,50 +395,52 @@ int IA::valeurAlphaBeta(std::vector<std::vector <Square > > square, bool ordi_jo
 			return 0;
 		}
 	}
-	if (prof == profMax) {
-		return estimation(square);
+	for (int i = 0; i < coupJouable.size(); i++){
+		jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
+		tmp = calcMax(squareNext, !ordi_joue, prof + 1, profMax, lastCoupJoueur, alpha, beta);
+
+		if (beta > tmp){
+			beta = tmp;
+		}
+
+		if (beta <= alpha){
+			return beta;
+		}
 	}
-	if (prof % 2 == 1){
-		best = INFINITY;
+	return beta;
+}
+
+int IA::calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta){
+	std::vector<std::pair<int, int>> coupJouable = coupJouables(square);
+	int tmp;
+	std::vector<std::vector <Square > > squareNext;
+	if (prof == profMax){
+		tmp = estimation(square);
+		return tmp;
 	}
-	else {
-		best = -INFINITY;
+	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
+		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
+			return 1000 - comptePions(square);
+		}
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
+			return -1000 + comptePions(square);
+		}
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
+			return 0;
+		}
 	}
 	for (int i = 0; i < coupJouable.size(); i++){
 		jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
-		value = valeurAlphaBeta(squareNext, !ordi_joue, (prof + 1), profMax, coupJouable[i], alpha, beta);
-		std::cout << "value : " << value << std::endl;
-		if (prof % 2 == 1){
-			if (value < best){
-				best = value;
-				if (best < beta){
-					beta = best;
-					if (alpha > beta) return best;
-				}
-			}
-			else if (value > best){
-				best = value;
-				if (best > alpha){
-					alpha = best;
-					if (alpha > beta) return best;
-				}
-			}
+		tmp = calcMin(squareNext, !ordi_joue, prof + 1, profMax, lastCoupJoueur, alpha, beta);
+
+		if (alpha < tmp){
+			alpha = tmp;
+		}
+
+		if (beta <= alpha){
+			return alpha;
 		}
 	}
-	int res;
-	if (ordi_joue){
-		res = *max_element(tab_valeurs.begin(), tab_valeurs.end()); //max de tab_valeurs
-	}
-	else {
-		res = *min_element(tab_valeurs.begin(), tab_valeurs.end()); //min de tab_valeurs
-	}
-	if (prof == 0){
-		for (int i = 0; i < tab_valeurs.size(); i++){
-			if (tab_valeurs[i] == best){
-				std::cout << "ok" << std::endl;
-				coupJoue = coupJouable[i];
-			}
-		}
-	}
-	return best;
+	return alpha;
 }
+
