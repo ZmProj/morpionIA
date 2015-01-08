@@ -17,7 +17,7 @@ private:
 	Etat *etat_;
 	std::pair<int, int> coupJoue;
 	std::pair<int, int> lastCoupJoueur;
-	
+
 
 public:
 	IA(std::vector<std::vector <Square> > *square, GameManagement *gameManagement, Etat *etat) :
@@ -44,5 +44,5 @@ public:
 	int analyse(std::vector<std::vector <Square> > &square, int x, int y);
 	void setLastCoupJoueur(int x, int y);
 	void appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup);
+	int valeurAlphaBeta(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta);
 };
-
