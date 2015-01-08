@@ -44,5 +44,8 @@ public:
 	int analyse(std::vector<std::vector <Square> > &square, int x, int y);
 	void setLastCoupJoueur(int x, int y);
 	void appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup);
+	void calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax);
 	int valeurAlphaBeta(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta);
+	int calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta);
+	int calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int prof, int profMax, std::pair<int, int> lastCoupJ, int alpha, int beta);
 };
