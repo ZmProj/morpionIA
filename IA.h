@@ -27,6 +27,8 @@ public:
 	{
 		lastCoupJoueur.first = 0;
 		lastCoupJoueur.second = 0;
+		coupJoue.first = -1;
+		coupJoue.second = -1;
 	}
 
 	int getIaType();
