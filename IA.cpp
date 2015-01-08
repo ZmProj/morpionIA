@@ -383,10 +383,10 @@ int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	int tmp;
 	std::vector<std::vector <Square > > squareNext;
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
-	if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (((*gameManagement_).getCurrentPlayer() + 1) % 2)){
+	if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
 		return -1000 + comptePions(square);
 	}
-	else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (*gameManagement_).getCurrentPlayer()){
+	else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
 		return 1000 - comptePions(square);
 	}
 		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
@@ -417,10 +417,10 @@ int IA::calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	int tmp;
 	std::vector<std::vector <Square > > squareNext;
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
-		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (*gameManagement_).getCurrentPlayer()){
+		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
 			return 1000 - comptePions(square);
 		}
-		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (((*gameManagement_).getCurrentPlayer() + 1) % 2)){
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
 			return -1000 + comptePions(square);
 		}
 		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
