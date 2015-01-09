@@ -54,7 +54,7 @@ void IA::iaRandom(){
 
 void IA::iaMinMax(){
 
-	valeurMinMax(*square_, true, 0, 9, lastCoupJoueur);
+	valeurMinMax(*square_, true, 0, 3, lastCoupJoueur);
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
 	lastCoupJoueur = coupJoue;
@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 9); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 3); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
