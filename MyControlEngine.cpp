@@ -55,30 +55,14 @@ void MyControlEngine::MouseCallback(int button, int state, int x, int y){
 		// JOUER
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && clickX >= -0.24f && clickX <= 0.24f && clickY >= -0.79f && clickY <= -0.61f){
 			(*gameManagement_).drawSquare();
-			// Si le joueur 1 n'est pas HUMAIN ou RANDOM (donc MIN-MAX ou ALPH-ABETA)
-			/*if ((*gameManagement_).getTypeJ1() != 0 && (*gameManagement_).getTypeJ1() != 1){
-				int firstIaPlayRows, firstIaPlayColumns;
-				// On cherche a jouer le meilleur premier coup pour l'IA 
-				// on joue donc au centre, une case avec un grand poids
-				switch ((*gameManagement_).getN()){
-				case 3:
-					firstIaPlayRows = 1;
-					firstIaPlayColumns = 1;
-					break;
-				case 5:
-					firstIaPlayRows = 2;
-					firstIaPlayColumns = 2;
-					break;
-				case 10: //4 4 ou  4 5
-					firstIaPlayRows = 4;
-					firstIaPlayColumns = 4;
-					break;
-				}
-				(*square_)[firstIaPlayRows][firstIaPlayColumns].changeColorJ1();
-				(*square_)[firstIaPlayRows][firstIaPlayColumns].setClickedBy(0);
-				(*etat_) = Etat::END_TURN;
-			}*/
-			*etat_ = INGAME;
+			if ((*gameManagement_).getTypeJ1() == 0 && (*gameManagement_).getCurrentPlayer() == 0
+				|| (*gameManagement_).getTypeJ2() == 0 && (*gameManagement_).getCurrentPlayer() == 1){
+				*etat_ = INGAME;
+			}
+			else{
+				*etat_ = IA_TO_PLAY;
+			}
+			
 		}
 		break;
 	case INGAME:
@@ -90,9 +74,9 @@ void MyControlEngine::MouseCallback(int button, int state, int x, int y){
 		}
 		else{
 			isHumainToPlay = false;
-			(*ia_).toPlay();
+			*etat_ = IA_TO_PLAY;
 		}
-		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (*gameManagement_).getSquare()[indiceY - 1][indiceX - 1].getClickedBy() == -1 && isHumainToPlay) {
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (*gameManagement_).getSquare()[indiceY - 1][indiceX - 1].getClickedBy() == -1) {
 			if ((*gameManagement_).getCurrentPlayer() == 0){
 				(*square_)[indiceY - 1][indiceX - 1].changeColorJ1();
 				(*square_)[indiceY - 1][indiceX - 1].setClickedBy(0);

@@ -120,10 +120,10 @@ int IA::valeurMinMax(std::vector<std::vector <Square > > square, bool ordi_joue,
 	std::vector<std::pair<int, int>> coupAJoue;
 	std::vector<std::vector <Square > > squareNext;
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
-		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
+		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (*gameManagement_).getCurrentPlayer()){
 			return 1000 - comptePions(square);
 		}
-		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == ((*gameManagement_).getCurrentPlayer() + 1) % 2){
 			return -1000 + comptePions(square);
 		}
 		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
@@ -159,9 +159,9 @@ int IA::valeurMinMax(std::vector<std::vector <Square > > square, bool ordi_joue,
 void IA::jouerCoup(std::vector<std::vector <Square> > &pos_next, std::vector<std::vector <Square> > &pos_courante, bool ordi_joue, std::pair<int, int> coup){
 	pos_next = pos_courante;
 	if (ordi_joue){
-		pos_next[coup.first][coup.second].setClickedBy(1);
+		pos_next[coup.first][coup.second].setClickedBy((*gameManagement_).getCurrentPlayer());
 	}
-	else pos_next[coup.first][coup.second].setClickedBy(0);
+	else pos_next[coup.first][coup.second].setClickedBy(((*gameManagement_).getCurrentPlayer() + 1) % 2);
 }
 
 int IA::comptePions(std::vector<std::vector <Square> > &jeu){
@@ -209,7 +209,6 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	int pBonus = 1; //pondération Bonus
 	int pCentre = 2; //pondération pour l'espace situé de chaque côté
 	int nmax = (*gameManagement_).getN();
-
 	//recherche horizontale
 	for (i = 0; i<nmax; i++){
 		if (i == x){
@@ -346,7 +345,6 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 		//il est possible de gagner dans cette direction
 		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre;
 	}
-
 	return estimation;
 }
 
