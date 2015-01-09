@@ -54,7 +54,7 @@ void IA::iaRandom(){
 
 void IA::iaMinMax(){
 
-	valeurMinMax(*square_, true, 0, 2, lastCoupJoueur);
+	valeurMinMax(*square_, true, 0, 9, lastCoupJoueur);
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
 	lastCoupJoueur = coupJoue;
@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 5); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 9); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -381,11 +381,11 @@ int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	int tmp;
 	std::vector<std::vector <Square > > squareNext;
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
-	if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
-		return -1000 + comptePions(square);
+		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == ((*gameManagement_).getCurrentPlayer() + 1) % 2){
+			return -1000 + comptePions(square);
 	}
-	else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
-		return 1000 - comptePions(square);
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (*gameManagement_).getCurrentPlayer()){
+			return 1000 - comptePions(square);
 	}
 		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
 			return 0;
@@ -415,10 +415,10 @@ int IA::calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	int tmp;
 	std::vector<std::vector <Square > > squareNext;
 	if (coupJouable.size() == 0 || (*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) != -1){
-		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 1){
+		if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == (*gameManagement_).getCurrentPlayer()){
 			return 1000 - comptePions(square);
 		}
-		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == 0){
+		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == ((*gameManagement_).getCurrentPlayer() + 1) % 2){
 			return -1000 + comptePions(square);
 		}
 		else if ((*gameManagement_).verifVainqueurForIA(lastCoupJ.first, lastCoupJ.second, square) == -1){
