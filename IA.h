@@ -53,5 +53,6 @@ public:
 	bool suitePossible(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns);
 	bool lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns);
 	bool colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns);
-
+	bool diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns);
+	bool diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns);
 };
