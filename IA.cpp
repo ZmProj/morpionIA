@@ -660,102 +660,36 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 	}
 }
 
-bool IA::suitePossible(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
 	int compteur = 0;
 	int dist = 0;
 
-	int rowsDepart = max(rows - nbAlignToWin, 0);
-	int columnsDepart = max(columns - nbAlignToWin, 0);
-
-	// ligne gauche droite
-	for (int i = columns; dist < nbAlignToWin && i < taillePlateau; i++){
-		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
-			compteur++;
-			dist++;
-		}
-		else{
-			break;
-		}
-	}
-
-	// ligne droite gauche
-	dist = 0;
-	for (int i = columns; i < nbAlignToWin && i > 0; i--){
-		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
-			compteur++;
-			dist++;
-		}
-		else {
-			break;
-		}
-	}
 	
-	if (compteur >= nbAlignToWin){
-		return true;
-	}
-	else{
-		compteur = 0;
-	}
-	
-
-	// ligne verticale haut bas
-	dist = 0;
-	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
-		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
-			compteur++;
-			dist++;
-		}
-		else{
-			break;
-		}
-	}
-
-	// ligne verticale bas haut
-	dist = 0;
-	for (int i = rows; i < nbAlignToWin && i > 0; i--){
-		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
-			compteur++;
-			dist++;
-		}
-		else {
-			break;
-		}
-	}
 
 	if (compteur >= nbAlignToWin){
 		return true;
 	}
 	else{
-		compteur = 0;
+		return false;
 	}
+}
 
-	// diagonale bas haut
-	dist = 0;
-	for (int i = rows; i < nbAlignToWin && i > 0; i--){
-		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
-			compteur++;
-			dist++;
-		}
-		else {
-			break;
-		}
+bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+
+
+	if (compteur >= nbAlignToWin){
+		return true;
 	}
-
-	/*for (){
-		if (square[rows][columns].getClickedBy() == -1 || square[rows][columns].getClickedBy() == couleur){
-			compteur++;
-			if (compteur == 4){
-				return true;
-			}
-		}
-		else {
-			compteur = 0;
-		}
-	}*/
-
-	return false;
+	else{
+		return false;
+	}
 }
 
 
