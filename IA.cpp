@@ -227,8 +227,9 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	//Diagonale descendante
 	for (i = 0; i<taillePlateau; i++)
 	{
-		if (square[i][i].getClickedBy() == couleur)
+		if (square[i][i].getClickedBy() == couleur && diagoBasHautPeutGagner(square, couleur, couleurAdversaire, i, i))
 		{
+
 			compteur1++;
 			compteur2 = 0;
 
@@ -273,7 +274,7 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	//Diagonale montante
 	for (i = 0; i<taillePlateau; i++)
 	{
-		if (square[i][2 - i].getClickedBy() == couleur)
+		if (square[i][2 - i].getClickedBy() == couleur && diagoHautBasPeutGagner(square, couleur, couleurAdversaire, i, i))
 		{
 			compteur1++;
 			compteur2 = 0;
@@ -322,7 +323,7 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 		//Horizontalement
 		for (j = 0; j<taillePlateau; j++)
 		{
-			if (square[i][j].getClickedBy() == couleur && true)
+			if (square[i][j].getClickedBy() == couleur && lignePeutGagner(square, couleur, couleurAdversaire, i, j))
 			{
 				compteur1++;
 				compteur2 = 0;
@@ -368,7 +369,7 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 		//Verticalement
 		for (j = 0; j<taillePlateau; j++)
 		{
-			if (square[j][i].getClickedBy() == couleur)
+			if (square[j][i].getClickedBy() == couleur && colonnePeutGagner(square, couleur, couleurAdversaire, i, j))
 			{
 				compteur1++;
 				compteur2 = 0;
@@ -431,7 +432,7 @@ bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleu
 
 	// ligne droite gauche
 	dist = 0;
-	for (int i = columns; i < nbAlignToWin && i > 0; i--){
+	for (int i = columns; dist < nbAlignToWin && i >= 0; i--){
 		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
 			compteur++;
 			dist++;
@@ -456,7 +457,7 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 	int dist = 0;
 
 	// ligne verticale haut bas
-	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
+	for (int i = rows; dist < nbAlignToWin && i < taillePlateau; i++){
 		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
 			compteur++;
 			dist++;
@@ -468,7 +469,7 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 
 	// ligne verticale bas haut
 	dist = 0;
-	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+	for (int i = rows; dist < nbAlignToWin && i >= 0; i--){
 		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
 			compteur++;
 			dist++;
@@ -492,7 +493,28 @@ bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int
 	int compteur = 0;
 	int dist = 0;
 
-	
+	// diago de bas en haut
+	for (int i = rows, j = columns; dist < nbAlignToWin && i >= 0 && j < taillePlateau; i--, j++){
+		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// diago de haut en bas
+	dist = 0;
+	for (int i = rows, j = columns; dist < nbAlignToWin && i < taillePlateau && j >= 0; i++, j--){
+		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
 
 	if (compteur >= nbAlignToWin){
 		return true;
@@ -508,7 +530,29 @@ bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int
 	int compteur = 0;
 	int dist = 0;
 
+	// diago de bas en haut
+	for (int i = rows, j = columns; dist < nbAlignToWin && i >= 0 && j >= 0; i--, j--){
+		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
 
+
+	// diago de haut en bas
+	dist = 0;
+	for (int i = rows, j = columns; dist < nbAlignToWin && i < taillePlateau && j < taillePlateau; i++, j++){
+		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
 
 	if (compteur >= nbAlignToWin){
 		return true;
@@ -545,6 +589,11 @@ void IA::calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 	}
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
+	std::cout << "ligne" << lignePeutGagner(square, (*gameManagement_).getCurrentPlayer(), ((*gameManagement_).getCurrentPlayer() + 1) % 2, coupJoue.first, coupJoue.second) << std::endl;
+	std::cout << "colonne" << colonnePeutGagner(square, (*gameManagement_).getCurrentPlayer(), ((*gameManagement_).getCurrentPlayer() + 1) % 2, coupJoue.first, coupJoue.second) << std::endl;
+	std::cout << "bashaut" << diagoBasHautPeutGagner(square, (*gameManagement_).getCurrentPlayer(), ((*gameManagement_).getCurrentPlayer() + 1) % 2, coupJoue.first, coupJoue.second) << std::endl;
+	std::cout << "haut bas" << diagoHautBasPeutGagner(square, (*gameManagement_).getCurrentPlayer(), ((*gameManagement_).getCurrentPlayer() + 1) % 2, coupJoue.first, coupJoue.second) << std::endl;
+	std::cout << std::endl;
 	lastCoupJoueur = coupJoue;
 }
 
