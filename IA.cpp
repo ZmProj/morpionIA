@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 3); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 5); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -131,8 +131,12 @@ int IA::valeurMinMax(std::vector<std::vector <Square > > square, bool ordi_joue,
 		}
 	}
 	if (prof == profMax) {
-		return estimation(square);
+		if (ordi_joue){
+			return analyse(square);
+		}
+		else return -analyse(square);
 	}
+
 	for (int i = 0; i < coupJouable.size(); i++){
 		jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
 		tab_valeurs.emplace_back(valeurMinMax(squareNext, !ordi_joue, (prof + 1), profMax, coupJouable[i]));
@@ -178,7 +182,7 @@ int IA::comptePions(std::vector<std::vector <Square> > &jeu){
 
 int IA::estimation(std::vector<std::vector <Square> > &square){
 	int estimation = 0; //estimation globale de la position
-
+	/*
 	for (int i = 0; i<(*gameManagement_).getN(); i++){
 		for (int j = 0; j<(*gameManagement_).getN(); j++){
 			if (square[i][j].getClickedBy() == -1) continue;
@@ -192,15 +196,15 @@ int IA::estimation(std::vector<std::vector <Square> > &square){
 				break;
 			}
 		}
-	}
+	}*/
 	return estimation;
 }
 
 
-int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
+int IA::analyse(std::vector<std::vector <Square> > &square){
 
 	int compteur1, compteur2, i, j;
-	const int couleur = square[x][y].getClickedBy();
+	const int couleur = (*gameManagement_).getCurrentPlayer();
 	const int couleurAdversaire = (couleur + 1) % 2;
 	int series_j11 = 0;
 	int series_j12 = 0;
@@ -220,16 +224,28 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	int serie4 = 4;
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int serieJ1 = 0;
+	int serieJ2 = 0;
 
-	compteur1 = 0;
-	compteur2 = 0;
+	for (int i = 0; i < taillePlateau; i++){
+		for (int j = 0; j < taillePlateau; i++){
+			std::cout << "aaaa" << std::endl;
+			serieJ1 += lignePeutGagner(square, couleur, couleurAdversaire, i, j) + colonnePeutGagner(square, couleur, couleurAdversaire, i, j)
+				+ diagoBasHautPeutGagner(square, couleur, couleurAdversaire, i, j) + diagoHautBasPeutGagner(square, couleur, couleurAdversaire, i, j);
+			std::cout << "iiiiiii" << std::endl;
+			serieJ2 += lignePeutGagner(square, couleurAdversaire, couleur, i, j) + colonnePeutGagner(square, couleurAdversaire, couleur, i, j)
+				+ diagoBasHautPeutGagner(square, couleurAdversaire, couleur, i, j) + diagoHautBasPeutGagner(square, couleurAdversaire, couleur, i, j);
+			std::cout << "ooooooo" << std::endl;
+		}
+	}
+	
+	return serieJ1 - serieJ2;
 
 	//Diagonale descendante
-	for (i = 0; i<taillePlateau; i++)
+	/*for (i = 0; i<taillePlateau; i++)
 	{
 		if (square[i][i].getClickedBy() == couleur && diagoBasHautPeutGagner(square, couleur, couleurAdversaire, i, i))
 		{
-
 			compteur1++;
 			compteur2 = 0;
 
@@ -409,14 +425,15 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			}
 		}
 	}
+
 	return (series_j11 * coeffSerie1 + series_j12 * coeffSerie2 + series_j13 * coeffSerie3 + series_j14 * coeffSerie4) - 
-				(series_j21 * coeffSerie1 + series_j22 * coeffSerie2 + series_j23 * coeffSerie3 + series_j24 * coeffSerie4);
+				(series_j21 * coeffSerie1 + series_j22 * coeffSerie2 + series_j23 * coeffSerie3 + series_j24 * coeffSerie4);*/
 }
 
-bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+int IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = -1;
+	int compteur = 0;
 	int dist = 0;
 
 	// ligne gauche droite
@@ -431,6 +448,7 @@ bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleu
 	}
 
 	// ligne droite gauche
+	compteur--;
 	dist = 0;
 	for (int i = columns; dist < nbAlignToWin && i >= 0; i--){
 		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
@@ -442,21 +460,16 @@ bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleu
 		}
 	}
 
-	if (compteur >= nbAlignToWin){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return max(0,compteur - nbAlignToWin + 1);
 }
 
-bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+int IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = -1;
+	int compteur = 0;
 	int dist = 0;
 
-	// ligne verticale haut bas
+	// ligne verticale haut bas 
 	for (int i = rows; dist < nbAlignToWin && i < taillePlateau; i++){
 		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
 			compteur++;
@@ -468,6 +481,7 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 	}
 
 	// ligne verticale bas haut
+	compteur--;
 	dist = 0;
 	for (int i = rows; dist < nbAlignToWin && i >= 0; i--){
 		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
@@ -479,18 +493,13 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 		}
 	}
 
-	if (compteur >= nbAlignToWin){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return max(0,compteur - nbAlignToWin + 1);
 }
 
-bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+int IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = -1;
+	int compteur = 0;
 	int dist = 0;
 
 	// diago de bas en haut
@@ -505,6 +514,7 @@ bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int
 	}
 
 	// diago de haut en bas
+	compteur--;
 	dist = 0;
 	for (int i = rows, j = columns; dist < nbAlignToWin && i < taillePlateau && j >= 0; i++, j--){
 		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
@@ -516,18 +526,13 @@ bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int
 		}
 	}
 
-	if (compteur >= nbAlignToWin){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return max(0,compteur - nbAlignToWin + 1);
 }
 
-bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+int IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = -1;
+	int compteur = 0;
 	int dist = 0;
 
 	// diago de bas en haut
@@ -543,6 +548,7 @@ bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int
 
 
 	// diago de haut en bas
+	compteur--;
 	dist = 0;
 	for (int i = rows, j = columns; dist < nbAlignToWin && i < taillePlateau && j < taillePlateau; i++, j++){
 		if (square[i][j].getClickedBy() == -1 || square[i][j].getClickedBy() == couleur){
@@ -554,12 +560,7 @@ bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int
 		}
 	}
 
-	if (compteur >= nbAlignToWin){
-		return true;
-	}
-	else{
-		return false;
-	}
+	return max(0,compteur - nbAlignToWin + 1);
 }
 
 
@@ -613,7 +614,13 @@ int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 		}
 	}
 	if (prof == profMax){
-		tmp = estimation(square);
+		if (ordi_joue){
+			tmp = analyse(square);
+		}
+		else{
+			tmp = -analyse(square);
+		}
+		
 		return tmp;
 	}
 	for (int i = 0; i < coupJouable.size(); i++){
@@ -647,8 +654,12 @@ int IA::calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 		}
 	}
 	if (prof == profMax){
-		tmp = estimation(square);
-		return tmp;
+		if (ordi_joue){
+			tmp = analyse(square);
+		}
+		else{
+			tmp = -analyse(square);
+		}
 	}
 	for (int i = 0; i < coupJouable.size(); i++){
 		jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
