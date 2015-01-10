@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 5); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 3); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -228,18 +228,15 @@ int IA::analyse(std::vector<std::vector <Square> > &square){
 	int serieJ2 = 0;
 
 	for (int i = 0; i < taillePlateau; i++){
-		for (int j = 0; j < taillePlateau; i++){
-			std::cout << "aaaa" << std::endl;
+		for (int j = 0; j < taillePlateau; j++){
 			serieJ1 += lignePeutGagner(square, couleur, couleurAdversaire, i, j) + colonnePeutGagner(square, couleur, couleurAdversaire, i, j)
 				+ diagoBasHautPeutGagner(square, couleur, couleurAdversaire, i, j) + diagoHautBasPeutGagner(square, couleur, couleurAdversaire, i, j);
-			std::cout << "iiiiiii" << std::endl;
 			serieJ2 += lignePeutGagner(square, couleurAdversaire, couleur, i, j) + colonnePeutGagner(square, couleurAdversaire, couleur, i, j)
 				+ diagoBasHautPeutGagner(square, couleurAdversaire, couleur, i, j) + diagoHautBasPeutGagner(square, couleurAdversaire, couleur, i, j);
-			std::cout << "ooooooo" << std::endl;
 		}
 	}
 	
-	return serieJ1 - serieJ2;
+	return serieJ2 - serieJ1;
 
 	//Diagonale descendante
 	/*for (i = 0; i<taillePlateau; i++)
@@ -584,6 +581,7 @@ void IA::calcIA(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 			tmp = calcMin(squareNext, !ordi_joue, prof + 1, profMax, coupJouable[i], alpha, beta);
 			if (alpha < tmp){
 				alpha = tmp;
+				std::cout << alpha << std::endl;
 				coupJoue = coupJouable[i];
 			}
 		}
@@ -614,13 +612,7 @@ int IA::calcMin(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 		}
 	}
 	if (prof == profMax){
-		if (ordi_joue){
-			tmp = analyse(square);
-		}
-		else{
-			tmp = -analyse(square);
-		}
-		
+		tmp = -analyse(square);
 		return tmp;
 	}
 	for (int i = 0; i < coupJouable.size(); i++){
@@ -654,12 +646,8 @@ int IA::calcMax(std::vector<std::vector <Square > > &square, bool ordi_joue, int
 		}
 	}
 	if (prof == profMax){
-		if (ordi_joue){
 			tmp = analyse(square);
-		}
-		else{
-			tmp = -analyse(square);
-		}
+			return tmp;
 	}
 	for (int i = 0; i < coupJouable.size(); i++){
 		jouerCoup(squareNext, square, ordi_joue, coupJouable[i]);
