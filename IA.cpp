@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 6); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 3); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -373,138 +373,43 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	}
 	return estimation;*/
 
-int compteur1, compteur2, i, j;
-const int couleur = square[x][y].getClickedBy();
-const int couleurAdversaire = (couleur + 1) % 2;
-int series_j11 = 0;
-int series_j12 = 0;
-int series_j13 = 0;
-int series_j14 = 0;
-int series_j21 = 0;
-int series_j22 = 0;
-int series_j23 = 0;
-int series_j24 = 0;
-int coeffSerie1 = 1;
-int coeffSerie2 = 2;
-int coeffSerie3 = 6;
-int coeffSerie4 = 18;
-int serie1 = 1;
-int serie2 = 2;
-int serie3 = 3;
-int serie4 = 4;
-const int taillePlateau = (*gameManagement_).getN();
-const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur1, compteur2, i, j;
+	const int couleur = square[x][y].getClickedBy();
+	const int couleurAdversaire = (couleur + 1) % 2;
+	int series_j11 = 0;
+	int series_j12 = 0;
+	int series_j13 = 0;
+	int series_j14 = 0;
+	int series_j21 = 0;
+	int series_j22 = 0;
+	int series_j23 = 0;
+	int series_j24 = 0;
+	int coeffSerie1 = 1;
+	int coeffSerie2 = 2;
+	int coeffSerie3 = 6;
+	int coeffSerie4 = 18;
+	int serie1 = 1;
+	int serie2 = 2;
+	int serie3 = 3;
+	int serie4 = 4;
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
 
-compteur1 = 0;
-compteur2 = 0;
-
-//Diagonale descendante
-for (i = 0; i<taillePlateau; i++)
-{
-	if (square[i][i].getClickedBy() == couleur)
-	{
-		compteur1++;
-		compteur2 = 0;
-
-		if (compteur1 == serie4){
-			series_j14++;
-		}
-		else if (compteur1 == serie3){
-			series_j13++;
-		}
-		else if (compteur1 == serie2)
-		{
-			series_j12++;
-		}
-		else if (compteur1 == serie1){
-			series_j11++;
-		}
-	}
-	else if (square[i][i].getClickedBy() == couleurAdversaire)
-	{
-		compteur2++;
-		compteur1 = 0;
-
-		if (compteur2 == serie4){
-			series_j24++;
-		}
-		else if(compteur2 == serie3){
-			series_j23++;
-		}
-		if (compteur2 == serie2)
-		{
-			series_j22++;
-		}
-		else if (compteur2 == serie1){
-			series_j21++;
-		}
-	}
-}
-
-compteur1 = 0;
-compteur2 = 0;
-
-//Diagonale montante
-for (i = 0; i<taillePlateau; i++)
-{
-	if (square[i][2 - i].getClickedBy() == couleur)
-	{
-		compteur1++;
-		compteur2 = 0;
-
-		if (compteur1 == serie4){
-			series_j14++;
-		}
-		else if(compteur1 == serie3){
-			series_j13++;
-		}
-		else if (compteur1 == serie2)
-		{
-			series_j12;
-		}
-		else if (compteur1 == serie1){
-			series_j11++;
-		}
-	}
-	else if (square[i][2 - i].getClickedBy() == couleurAdversaire)
-	{
-		compteur2++;
-		compteur1 = 0;
-
-		if (compteur2 == serie4){
-			series_j24++;
-		}
-		else if(compteur2 == serie3){
-			series_j23++;
-		}
-		else if (compteur2 == serie2)
-		{
-			series_j22++;
-		}
-		else if (compteur2 == serie1){
-			series_j21++;
-		}
-	}
-}
-
-//En ligne
-for (i = 0; i<taillePlateau; i++)
-{
 	compteur1 = 0;
 	compteur2 = 0;
 
-	//Horizontalement
-	for (j = 0; j<taillePlateau; j++)
+	//Diagonale descendante
+	for (i = 0; i<taillePlateau; i++)
 	{
-		if (square[i][j].getClickedBy() == couleur)
+		if (square[i][i].getClickedBy() == couleur)
 		{
 			compteur1++;
 			compteur2 = 0;
-			
+
 			if (compteur1 == serie4){
 				series_j14++;
 			}
-			else if(compteur1 == serie3){
+			else if (compteur1 == serie3){
 				series_j13++;
 			}
 			else if (compteur1 == serie2)
@@ -515,7 +420,53 @@ for (i = 0; i<taillePlateau; i++)
 				series_j11++;
 			}
 		}
-		else if (square[i][j].getClickedBy() == couleurAdversaire)
+		else if (square[i][i].getClickedBy() == couleurAdversaire)
+		{
+			compteur2++;
+			compteur1 = 0;
+
+			if (compteur2 == serie4){
+				series_j24++;
+			}
+			else if(compteur2 == serie3){
+				series_j23++;
+			}
+			if (compteur2 == serie2)
+			{
+				series_j22++;
+			}
+			else if (compteur2 == serie1){
+				series_j21++;
+			}
+		}
+	}
+
+	compteur1 = 0;
+	compteur2 = 0;
+
+	//Diagonale montante
+	for (i = 0; i<taillePlateau; i++)
+	{
+		if (square[i][2 - i].getClickedBy() == couleur)
+		{
+			compteur1++;
+			compteur2 = 0;
+
+			if (compteur1 == serie4){
+				series_j14++;
+			}
+			else if(compteur1 == serie3){
+				series_j13++;
+			}
+			else if (compteur1 == serie2)
+			{
+				series_j12;
+			}
+			else if (compteur1 == serie1){
+				series_j11++;
+			}
+		}
+		else if (square[i][2 - i].getClickedBy() == couleurAdversaire)
 		{
 			compteur2++;
 			compteur1 = 0;
@@ -536,55 +487,278 @@ for (i = 0; i<taillePlateau; i++)
 		}
 	}
 
-	compteur1 = 0;
-	compteur2 = 0;
-
-	//Verticalement
-	for (j = 0; j<taillePlateau; j++)
+	//En ligne
+	for (i = 0; i<taillePlateau; i++)
 	{
-		if (square[j][i].getClickedBy() == couleur)
-		{
-			compteur1++;
-			compteur2 = 0;
+		compteur1 = 0;
+		compteur2 = 0;
 
-			if (compteur1 == serie4){
-				series_j14++;
-			}
-			else if(compteur1 == serie3){
-				series_j13++;
-			}
-			else if (compteur1 == serie2)
+		//Horizontalement
+		for (j = 0; j<taillePlateau; j++)
+		{
+			if (square[i][j].getClickedBy() == couleur)
 			{
-				series_j12++;
+				compteur1++;
+				compteur2 = 0;
+			
+				if (compteur1 == serie4){
+					series_j14++;
+				}
+				else if(compteur1 == serie3){
+					series_j13++;
+				}
+				else if (compteur1 == serie2)
+				{
+					series_j12++;
+				}
+				else if (compteur1 == serie1){
+					series_j11++;
+				}
 			}
-			else if (compteur1 == serie1){
-				series_j11++;
+			else if (square[i][j].getClickedBy() == couleurAdversaire)
+			{
+				compteur2++;
+				compteur1 = 0;
+
+				if (compteur2 == serie4){
+					series_j24++;
+				}
+				else if(compteur2 == serie3){
+					series_j23++;
+				}
+				else if (compteur2 == serie2)
+				{
+					series_j22++;
+				}
+				else if (compteur2 == serie1){
+					series_j21++;
+				}
 			}
 		}
-		else if (square[j][i].getClickedBy() == couleurAdversaire)
-		{
-			compteur2++;
-			compteur1 = 0;
 
-			if (compteur2 == serie4){
-				series_j24++;
-			}
-			else if(compteur2 == serie3){
-				series_j23++;
-			}
-			if (compteur2 == serie2)
+		compteur1 = 0;
+		compteur2 = 0;
+
+		//Verticalement
+		for (j = 0; j<taillePlateau; j++)
+		{
+			if (square[j][i].getClickedBy() == couleur)
 			{
-				series_j22++;
+				compteur1++;
+				compteur2 = 0;
+
+				if (compteur1 == serie4){
+					series_j14++;
+				}
+				else if(compteur1 == serie3){
+					series_j13++;
+				}
+				else if (compteur1 == serie2)
+				{
+					series_j12++;
+				}
+				else if (compteur1 == serie1){
+					series_j11++;
+				}
 			}
-			else if (compteur2 == serie1){
-				series_j21++;
+			else if (square[j][i].getClickedBy() == couleurAdversaire)
+			{
+				compteur2++;
+				compteur1 = 0;
+
+				if (compteur2 == serie4){
+					series_j24++;
+				}
+				else if(compteur2 == serie3){
+					series_j23++;
+				}
+				if (compteur2 == serie2)
+				{
+					series_j22++;
+				}
+				else if (compteur2 == serie1){
+					series_j21++;
+				}
 			}
 		}
 	}
+	return (series_j11 * coeffSerie1 + series_j12 * coeffSerie2 + series_j13 * coeffSerie3 + series_j14 * coeffSerie4) - 
+				(series_j21 * coeffSerie1 + series_j22 * coeffSerie2 + series_j23 * coeffSerie3 + series_j24 * coeffSerie4);
 }
-return (series_j11 * coeffSerie1 + series_j12 * coeffSerie2 + series_j13 * coeffSerie3 + series_j14 * coeffSerie4) - 
-			(series_j21 * coeffSerie1 + series_j22 * coeffSerie2 + series_j23 * coeffSerie3 + series_j24 * coeffSerie4);
+
+bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	// ligne gauche droite
+	for (int i = columns; dist < nbAlignToWin && i < taillePlateau; i++){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne droite gauche
+	dist = 0;
+	for (int i = columns; i < nbAlignToWin && i > 0; i--){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		return false;
+	}
 }
+
+bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	// ligne verticale haut bas
+	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne verticale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool IA::suitePossible(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	int rowsDepart = max(rows - nbAlignToWin, 0);
+	int columnsDepart = max(columns - nbAlignToWin, 0);
+
+	// ligne gauche droite
+	for (int i = columns; dist < nbAlignToWin && i < taillePlateau; i++){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne droite gauche
+	dist = 0;
+	for (int i = columns; i < nbAlignToWin && i > 0; i--){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+	
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		compteur = 0;
+	}
+	
+
+	// ligne verticale haut bas
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne verticale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		compteur = 0;
+	}
+
+	// diagonale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	/*for (){
+		if (square[rows][columns].getClickedBy() == -1 || square[rows][columns].getClickedBy() == couleur){
+			compteur++;
+			if (compteur == 4){
+				return true;
+			}
+		}
+		else {
+			compteur = 0;
+		}
+	}*/
+
+	return false;
+}
+
+
 
 void IA::setLastCoupJoueur(int x, int y){
 	lastCoupJoueur.first = x;
