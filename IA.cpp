@@ -198,7 +198,7 @@ int IA::estimation(std::vector<std::vector <Square> > &square){
 
 
 int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
-	const int couleur = square[x][y].getClickedBy();
+	/*const int couleur = square[x][y].getClickedBy();
 	int estimation = 0; //estimation pour toutes les directions
 	int compteur = 0; //compte le nombre de possibilités pour une direction
 	int centre = 0; //regarde si le jeton a de l'espace de chaque côté
@@ -209,6 +209,12 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 	int pBonus = 1; //pondération Bonus
 	int pCentre = 2; //pondération pour l'espace situé de chaque côté
 	int nmax = (*gameManagement_).getN();
+
+	const int couleurAdversaire = (couleur + 1) % 2; 
+	int malus = 0; // pts lié aux jetons adverses ds cette direction 
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+
 	//recherche horizontale
 	for (i = 0; i<nmax; i++){
 		if (i == x){
@@ -223,6 +229,9 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			compteur++;
 			bonus++;
 		}
+		else if (square[i][y].getClickedBy() == couleurAdversaire){
+			malus++;
+		}
 		else{
 			if (pass){
 				i = nmax; //il n'y aura plus de liberté supplémentaire, on arrête la recherche ici
@@ -231,12 +240,13 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 				//on réinitialise la recherche
 				compteur = 0;
 				bonus = 0;
+				malus = 0;
 			}
 		}
 	}
 	if (compteur >= (*gameManagement_).getNbAlignToWin()){
 		//il est possible de gagner dans cette direction
-		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre;
+		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre + malus * 100;
 	}
 
 	//recherche verticale
@@ -256,6 +266,9 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			compteur++;
 			bonus++;
 		}
+		else if (square[x][j].getClickedBy() == couleurAdversaire){
+			malus++;
+		}
 		else{
 			if (pass){
 				j = nmax; //il n'y aura plus de liberté supplémentaire, on arrête la recherche ici
@@ -264,12 +277,13 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 				//on réinitialise la recherche
 				compteur = 0;
 				bonus = 0;
+				malus = 0;
 			}
 		}
 	}
 	if (compteur >= (*gameManagement_).getNbAlignToWin()){
 		//il est possible de gagner dans cette direction
-		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre;
+		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre + malus * 100;
 	}
 
 	//recherche diagonale (NO-SE)
@@ -284,6 +298,9 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 		else if (square[i][j].getClickedBy() == couleur){
 			compteur++;
 			bonus++;
+		}
+		else if (square[i][j].getClickedBy() == couleurAdversaire){
+			malus++;
 		}
 		else{
 			i = 0;
@@ -300,13 +317,16 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			compteur++;
 			bonus++;
 		}
+		else if (square[i][j].getClickedBy() == couleurAdversaire){
+			malus++;
+		}
 		else{
 			i = nmax;
 		}
 	}
 	if (compteur >= (*gameManagement_).getNbAlignToWin()){
 		//il est possible de gagner dans cette direction
-		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre;
+		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre + malus * 100;
 	}
 
 	//recherche diagonale (NE-SO)
@@ -321,6 +341,9 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 		else if (square[i][j].getClickedBy() == couleur){
 			compteur++;
 			bonus++;
+		}
+		else if (square[i][j].getClickedBy() == couleurAdversaire){
+			malus++;
 		}
 		else{
 			i = 0;
@@ -337,16 +360,405 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			compteur++;
 			bonus++;
 		}
+		else if (square[i][j].getClickedBy() == couleurAdversaire){
+			malus++;
+		}
 		else{
 			i = nmax;
 		}
 	}
 	if (compteur >= (*gameManagement_).getNbAlignToWin()){
 		//il est possible de gagner dans cette direction
-		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre;
+		estimation += compteur*pLiberte + bonus*pBonus + (1 - std::abs(centre / (compteur - 1) - 0.5))*compteur*pCentre + malus * 100;
 	}
-	return estimation;
+	return estimation;*/
+
+	int compteur1, compteur2, i, j;
+	const int couleur = square[x][y].getClickedBy();
+	const int couleurAdversaire = (couleur + 1) % 2;
+	int series_j11 = 0;
+	int series_j12 = 0;
+	int series_j13 = 0;
+	int series_j14 = 0;
+	int series_j21 = 0;
+	int series_j22 = 0;
+	int series_j23 = 0;
+	int series_j24 = 0;
+	int coeffSerie1 = 1;
+	int coeffSerie2 = 2;
+	int coeffSerie3 = 6;
+	int coeffSerie4 = 18;
+	int serie1 = 1;
+	int serie2 = 2;
+	int serie3 = 3;
+	int serie4 = 4;
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+
+	compteur1 = 0;
+	compteur2 = 0;
+
+	//Diagonale descendante
+	for (i = 0; i<taillePlateau; i++)
+	{
+		if (square[i][i].getClickedBy() == couleur)
+		{
+			compteur1++;
+			compteur2 = 0;
+
+			if (compteur1 == serie4){
+				series_j14++;
+			}
+			else if (compteur1 == serie3){
+				series_j13++;
+			}
+			else if (compteur1 == serie2)
+			{
+				series_j12++;
+			}
+			else if (compteur1 == serie1){
+				series_j11++;
+			}
+		}
+		else if (square[i][i].getClickedBy() == couleurAdversaire)
+		{
+			compteur2++;
+			compteur1 = 0;
+
+			if (compteur2 == serie4){
+				series_j24++;
+			}
+			else if(compteur2 == serie3){
+				series_j23++;
+			}
+			if (compteur2 == serie2)
+			{
+				series_j22++;
+			}
+			else if (compteur2 == serie1){
+				series_j21++;
+			}
+		}
+	}
+
+	compteur1 = 0;
+	compteur2 = 0;
+
+	//Diagonale montante
+	for (i = 0; i<taillePlateau; i++)
+	{
+		if (square[i][2 - i].getClickedBy() == couleur)
+		{
+			compteur1++;
+			compteur2 = 0;
+
+			if (compteur1 == serie4){
+				series_j14++;
+			}
+			else if(compteur1 == serie3){
+				series_j13++;
+			}
+			else if (compteur1 == serie2)
+			{
+				series_j12;
+			}
+			else if (compteur1 == serie1){
+				series_j11++;
+			}
+		}
+		else if (square[i][2 - i].getClickedBy() == couleurAdversaire)
+		{
+			compteur2++;
+			compteur1 = 0;
+
+			if (compteur2 == serie4){
+				series_j24++;
+			}
+			else if(compteur2 == serie3){
+				series_j23++;
+			}
+			else if (compteur2 == serie2)
+			{
+				series_j22++;
+			}
+			else if (compteur2 == serie1){
+				series_j21++;
+			}
+		}
+	}
+
+	//En ligne
+	for (i = 0; i<taillePlateau; i++)
+	{
+		compteur1 = 0;
+		compteur2 = 0;
+
+		//Horizontalement
+		for (j = 0; j<taillePlateau; j++)
+		{
+			if (square[i][j].getClickedBy() == couleur)
+			{
+				compteur1++;
+				compteur2 = 0;
+			
+				if (compteur1 == serie4){
+					series_j14++;
+				}
+				else if(compteur1 == serie3){
+					series_j13++;
+				}
+				else if (compteur1 == serie2)
+				{
+					series_j12++;
+				}
+				else if (compteur1 == serie1){
+					series_j11++;
+				}
+			}
+			else if (square[i][j].getClickedBy() == couleurAdversaire)
+			{
+				compteur2++;
+				compteur1 = 0;
+
+				if (compteur2 == serie4){
+					series_j24++;
+				}
+				else if(compteur2 == serie3){
+					series_j23++;
+				}
+				else if (compteur2 == serie2)
+				{
+					series_j22++;
+				}
+				else if (compteur2 == serie1){
+					series_j21++;
+				}
+			}
+		}
+
+		compteur1 = 0;
+		compteur2 = 0;
+
+		//Verticalement
+		for (j = 0; j<taillePlateau; j++)
+		{
+			if (square[j][i].getClickedBy() == couleur)
+			{
+				compteur1++;
+				compteur2 = 0;
+
+				if (compteur1 == serie4){
+					series_j14++;
+				}
+				else if(compteur1 == serie3){
+					series_j13++;
+				}
+				else if (compteur1 == serie2)
+				{
+					series_j12++;
+				}
+				else if (compteur1 == serie1){
+					series_j11++;
+				}
+			}
+			else if (square[j][i].getClickedBy() == couleurAdversaire)
+			{
+				compteur2++;
+				compteur1 = 0;
+
+				if (compteur2 == serie4){
+					series_j24++;
+				}
+				else if(compteur2 == serie3){
+					series_j23++;
+				}
+				if (compteur2 == serie2)
+				{
+					series_j22++;
+				}
+				else if (compteur2 == serie1){
+					series_j21++;
+				}
+			}
+		}
+	}
+	return (series_j11 * coeffSerie1 + series_j12 * coeffSerie2 + series_j13 * coeffSerie3 + series_j14 * coeffSerie4) - 
+				(series_j21 * coeffSerie1 + series_j22 * coeffSerie2 + series_j23 * coeffSerie3 + series_j24 * coeffSerie4);
 }
+
+bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	// ligne gauche droite
+	for (int i = columns; dist < nbAlignToWin && i < taillePlateau; i++){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne droite gauche
+	dist = 0;
+	for (int i = columns; i < nbAlignToWin && i > 0; i--){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	// ligne verticale haut bas
+	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne verticale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
+bool IA::suitePossible(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
+	const int taillePlateau = (*gameManagement_).getN();
+	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
+	int compteur = 0;
+	int dist = 0;
+
+	int rowsDepart = max(rows - nbAlignToWin, 0);
+	int columnsDepart = max(columns - nbAlignToWin, 0);
+
+	// ligne gauche droite
+	for (int i = columns; dist < nbAlignToWin && i < taillePlateau; i++){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne droite gauche
+	dist = 0;
+	for (int i = columns; i < nbAlignToWin && i > 0; i--){
+		if (square[rows][i].getClickedBy() == -1 || square[rows][i].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+	
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		compteur = 0;
+	}
+	
+
+	// ligne verticale haut bas
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i < taillePlateau; i++){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else{
+			break;
+		}
+	}
+
+	// ligne verticale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	if (compteur >= nbAlignToWin){
+		return true;
+	}
+	else{
+		compteur = 0;
+	}
+
+	// diagonale bas haut
+	dist = 0;
+	for (int i = rows; i < nbAlignToWin && i > 0; i--){
+		if (square[i][columns].getClickedBy() == -1 || square[i][columns].getClickedBy() == couleur){
+			compteur++;
+			dist++;
+		}
+		else {
+			break;
+		}
+	}
+
+	/*for (){
+		if (square[rows][columns].getClickedBy() == -1 || square[rows][columns].getClickedBy() == couleur){
+			compteur++;
+			if (compteur == 4){
+				return true;
+			}
+		}
+		else {
+			compteur = 0;
+		}
+	}*/
+
+	return false;
+}
+
+
 
 void IA::setLastCoupJoueur(int x, int y){
 	lastCoupJoueur.first = x;
