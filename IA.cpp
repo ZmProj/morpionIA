@@ -287,7 +287,7 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 			}
 			else if (compteur1 == serie2)
 			{
-				series_j12;
+				series_j12++;
 			}
 			else if (compteur1 == serie1){
 				series_j11++;
@@ -416,7 +416,7 @@ int IA::analyse(std::vector<std::vector <Square> > &square, int x, int y){
 bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = 0;
+	int compteur = -1;
 	int dist = 0;
 
 	// ligne gauche droite
@@ -453,7 +453,7 @@ bool IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleu
 bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = 0;
+	int compteur = -1;
 	int dist = 0;
 
 	// ligne verticale haut bas
@@ -490,7 +490,7 @@ bool IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coul
 bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = 0;
+	int compteur = -1;
 	int dist = 0;
 
 	// diago de bas en haut
@@ -527,7 +527,7 @@ bool IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int
 bool IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
 	const int taillePlateau = (*gameManagement_).getN();
 	const int nbAlignToWin = (*gameManagement_).getNbAlignToWin();
-	int compteur = 0;
+	int compteur = -1;
 	int dist = 0;
 
 	// diago de bas en haut
