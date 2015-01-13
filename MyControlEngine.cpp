@@ -74,7 +74,6 @@ void MyControlEngine::MouseCallback(int button, int state, int x, int y){
 		}
 		else{
 			isHumainToPlay = false;
-			*etat_ = IA_TO_PLAY;
 		}
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (*gameManagement_).getSquare()[indiceY - 1][indiceX - 1].getClickedBy() == -1 && isHumainToPlay) {
 			if ((*gameManagement_).getCurrentPlayer() == 0){

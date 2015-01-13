@@ -46,13 +46,8 @@ void IA::iaRandom(){
 	(*etat_) = Etat::END_TURN;
 
 	if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == type){
-		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
 	}
-	else if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == ((type + 1) % 2)){
-		std::cout << "pas encore gagne" << std::endl;
-	}
-
 }
 
 void IA::iaMinMax(){
@@ -80,11 +75,7 @@ void IA::iaAlphaBeta(){
 	(*etat_) = Etat::END_TURN;
 
 	if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == type){
-		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
-	}
-	else if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == ((type + 1) % 2)){
-		std::cout << "pas encore gagne" << std::endl;
 	}
 }
 

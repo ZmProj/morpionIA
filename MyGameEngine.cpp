@@ -11,6 +11,13 @@ void MyGameEngine::idle(){
 		if (!gameManagement_->resteCaseLibre()){
 			(*etat_) = Etat::END_GAME;
 		}
+		if ((*gameManagement_).getTypeJ1() == 0 && (*gameManagement_).getCurrentPlayer() == 0
+			|| (*gameManagement_).getTypeJ2() == 0 && (*gameManagement_).getCurrentPlayer() == 1){
+			// nothing
+		}
+		else{
+			*etat_ = IA_TO_PLAY;
+		}
 		break;
 	case END_TURN:
 		if (!gameManagement_->resteCaseLibre()){
