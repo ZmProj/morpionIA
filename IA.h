@@ -17,6 +17,8 @@ private:
 	Etat *etat_;
 	std::pair<int, int> coupJoue;
 	std::pair<int, int> lastCoupJoueur;
+	int N_;
+	int nbAlignToWin_;
 
 
 public:

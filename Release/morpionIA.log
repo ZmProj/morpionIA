@@ -1,15 +1,15 @@
-﻿La génération a démarré 11/01/2015 01:09:06.
+﻿La génération a démarré 13/01/2015 22:29:29.
      1>Projet "C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\morpionIA\morpionIA.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Zizou\Documents\cpp\uselibgraph\include /IC:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt IA.cpp
          IA.cpp
-     1>IA.cpp(94): warning C4018: '<' : incompatibilité signed/unsigned
      1>IA.cpp(95): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(140): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(153): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(451): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(484): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(518): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(96): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(161): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(174): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(467): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(500): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(534): warning C4018: '<' : incompatibilité signed/unsigned
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\Zizou\Documents\cpp\uselibgraph\libwin /LIBPATH:C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\libWin engine.lib glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\IAmorpion\Release\morpionIA.lib" /MACHINE:X86 /SAFESEH Release\GameManagement.obj
          Release\IA.obj
@@ -31,4 +31,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:02.14
+Temps écoulé 00:00:02.42
