@@ -272,7 +272,7 @@ int IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur
 		}
 	}
 
-	return max(0, (adj * 2)*(compteur - nbAlignToWin_ + 1));
+	return max(0, (adj * adj)*(compteur - nbAlignToWin_ + 1));
 }
 
 int IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -325,7 +325,7 @@ int IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coule
 		}
 	}
 
-	return max(0, (adj * 2)*(compteur - nbAlignToWin_ + 1));
+	return max(0, (adj * adj)*(compteur - nbAlignToWin_ + 1));
 }
 
 int IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -372,7 +372,7 @@ int IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int 
 		}
 	}
 
-	return max(0, (adj * 2)*compteur - nbAlignToWin_ + 1);
+	return max(0, (adj * adj)*compteur - nbAlignToWin_ + 1);
 }
 
 int IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -420,7 +420,7 @@ int IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int 
 		}
 	}
 
-	return max(0, (adj * 2)*compteur - nbAlignToWin_ + 1);
+	return max(0, (adj * adj)*compteur - nbAlignToWin_ + 1);
 }
 
 
