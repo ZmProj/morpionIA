@@ -26,6 +26,8 @@ int IA::getIaType(){
 }
 
 void IA::iaRandom(){
+	N_ = (*gameManagement_).getN();
+	nbAlignToWin_ = (*gameManagement_).getNbAlignToWin();
 	/* initialize random seed: */
 	srand(time(NULL));
 
@@ -53,7 +55,8 @@ void IA::iaRandom(){
 }
 
 void IA::iaMinMax(){
-
+	N_ = (*gameManagement_).getN();
+	nbAlignToWin_ = (*gameManagement_).getNbAlignToWin();
 	valeurMinMax(*square_, true, 0, 5, lastCoupJoueur);
 	appliqueCoup(*square_, coupJoue);
 	appliqueCouleur(*square_, coupJoue);
