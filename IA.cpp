@@ -203,17 +203,18 @@ int IA::analyse(std::vector<std::vector <Square> > &square, bool ordi_joue){
 		couleurAdversaire = (*gameManagement_).getCurrentPlayer();
 		couleur = (couleurAdversaire + 1) % 2;
 	}
-	std::vector<std::pair<int,int>> coups = coupJouables(square);
-	int tailleCoup = coups.size();
+
 
 	int serieJ1 = 0;
 	int serieJ2 = 0;
 
-	for (int i = 0; i < tailleCoup; i++){
-		serieJ1 += lignePeutGagner(square, couleur, couleurAdversaire, coups[i].second, coups[i].first) + colonnePeutGagner(square, couleur, couleurAdversaire, coups[i].second, coups[i].first)
-			+ diagoBasHautPeutGagner(square, couleur, couleurAdversaire, coups[i].second, coups[i].first) + diagoHautBasPeutGagner(square, couleur, couleurAdversaire, coups[i].second, coups[i].first);
-		serieJ2 += lignePeutGagner(square, couleurAdversaire, couleur, coups[i].second, coups[i].first) + colonnePeutGagner(square, couleurAdversaire, couleur, coups[i].second, coups[i].first)
-			+ diagoBasHautPeutGagner(square, couleurAdversaire, couleur, coups[i].second, coups[i].first) + diagoHautBasPeutGagner(square, couleurAdversaire, couleur, coups[i].second, coups[i].first);
+	for (int i = 0; i < N_; i++){
+		for (int j = 0; j < N_; j++){
+			serieJ1 += lignePeutGagner(square, couleur, couleurAdversaire, i, j) + colonnePeutGagner(square, couleur, couleurAdversaire, i, j)
+				+ diagoBasHautPeutGagner(square, couleur, couleurAdversaire, i, j) + diagoHautBasPeutGagner(square, couleur, couleurAdversaire, i, j);
+			serieJ2 += lignePeutGagner(square, couleurAdversaire, couleur, i, j) + colonnePeutGagner(square, couleurAdversaire, couleur, i, j)
+				+ diagoBasHautPeutGagner(square, couleurAdversaire, couleur, i, j) + diagoHautBasPeutGagner(square, couleurAdversaire, couleur, i, j);
+		}
 	}
 
 	return serieJ1 - serieJ2;
