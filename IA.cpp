@@ -201,27 +201,6 @@ int IA::comptePions(std::vector<std::vector <Square> > &jeu){
 	return cnt;
 }
 
-int IA::estimation(std::vector<std::vector <Square> > &square){
-	int estimation = 0; //estimation globale de la position
-	/*
-	for (int i = 0; i<(*gameManagement_).getN(); i++){
-		for (int j = 0; j<(*gameManagement_).getN(); j++){
-			if (square[i][j].getClickedBy() == -1) continue;
-			//estimation de la valeur de ce jeton et ajout au calcul d'estimation global
-			switch (square[i][j].getClickedBy()){
-			case 0:
-				estimation -= analyse(square, i, j);
-				break;
-			case 1:
-				estimation += analyse(square, i, j);
-				break;
-			}
-		}
-	}*/
-	return estimation;
-}
-
-
 int IA::analyse(std::vector<std::vector <Square> > &square, bool ordi_joue){
 
 	int couleur;
