@@ -1,4 +1,4 @@
-﻿La génération a démarré 14/01/2015 00:39:30.
+﻿La génération a démarré 14/01/2015 00:53:43.
      1>Projet "C:\Users\Zizou\Documents\cpp\IAmorpion\morpionIA\morpionIA.vcxproj" sur le nœud 2 (Rebuild cible(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\Zizou\Documents\cpp\uselibgraph\include /IC:\Users\Marc\Desktop\annees_etudes\M1_info_sophia\S7\C++\PROJET\uselibgraph\uselibgraph\include /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameManagement.cpp IA.cpp main.cpp MyControlEngine.cpp MyGameEngine.cpp MyGraphicEngine.cpp Square.cpp utility.cpp
@@ -14,11 +14,13 @@
      1>GameManagement.cpp(243): warning C4018: '<' : incompatibilité signed/unsigned
      1>GameManagement.cpp(244): warning C4018: '<' : incompatibilité signed/unsigned
          IA.cpp
-     1>IA.cpp(151): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(164): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(434): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(467): warning C4018: '<' : incompatibilité signed/unsigned
-     1>IA.cpp(501): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(95): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(96): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(161): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(174): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(447): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(480): warning C4018: '<' : incompatibilité signed/unsigned
+     1>IA.cpp(514): warning C4018: '<' : incompatibilité signed/unsigned
          main.cpp
          MyControlEngine.cpp
          MyGameEngine.cpp
@@ -50,4 +52,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:04.79
+Temps écoulé 00:00:04.54
