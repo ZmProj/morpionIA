@@ -73,7 +73,7 @@ void IA::iaMinMax(){
 
 void IA::iaAlphaBeta(){
 	//valeurAlphaBeta(*square_, true, 0, 5, lastCoupJoueur,-INFINITY,INFINITY);
-	calcIA(*square_, true, 0, 6); // /!\ Ne marche que pour les pronfondeurs impairs !
+	calcIA(*square_, true, 0, 3); // /!\ Ne marche que pour les pronfondeurs impairs !
 
 	int type = (*square_)[coupJoue.first][coupJoue.second].getClickedBy();
 	(*etat_) = Etat::END_TURN;
@@ -280,8 +280,13 @@ int IA::lignePeutGagner(std::vector<std::vector <Square > > &square, int couleur
 		}
 	}
 
+	if (adj > 4) return max(0, adj * 5 * (compteur - nbAlignToWin + 5));
+	if (adj == 4) return max(0, adj * 4 * (compteur - nbAlignToWin + 3));
+	if (adj == 3) return max(0, adj * 3 * (compteur - nbAlignToWin + 1));
+	if (adj == 2) return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
 
-	return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+
+	return max(0, adj + (compteur - nbAlignToWin + 1));
 }
 
 int IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -330,7 +335,13 @@ int IA::colonnePeutGagner(std::vector<std::vector <Square > > &square, int coule
 		}
 	}
 
-	return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+	if (adj > 4) return max(0, adj * 5 * (compteur - nbAlignToWin + 5));
+	if (adj == 4) return max(0, adj * 4 * (compteur - nbAlignToWin + 3));
+	if (adj == 3) return max(0, adj * 3 * (compteur - nbAlignToWin + 1));
+	if (adj == 2) return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+
+
+	return max(0, adj * (compteur - nbAlignToWin + 1));
 }
 
 int IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -379,7 +390,13 @@ int IA::diagoBasHautPeutGagner(std::vector<std::vector <Square > > &square, int 
 		}
 	}
 
-	return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+	if (adj > 4) return max(0, adj * 5 * (compteur - nbAlignToWin + 5));
+	if (adj == 4) return max(0, adj * 4 * (compteur - nbAlignToWin + 3));
+	if (adj == 3) return max(0, adj * 3 * (compteur - nbAlignToWin + 1));
+	if (adj == 2) return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+
+
+	return max(0, adj * (compteur - nbAlignToWin + 1));
 }
 
 int IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int couleur, int couleurAdversaire, int rows, int columns){
@@ -429,7 +446,13 @@ int IA::diagoHautBasPeutGagner(std::vector<std::vector <Square > > &square, int 
 		}
 	}
 
-	return max(0, 2 * adj * (compteur - nbAlignToWin + 1));
+	if (adj > 4) return max(0, adj * 5 * (compteur - nbAlignToWin + 5));
+	if (adj == 4) return max(0, adj * 4 * (compteur - nbAlignToWin + 3));
+	if (adj == 3) return max(0, adj * 3 * (compteur - nbAlignToWin + 1));
+	if (adj == 2) return max(0, adj * 2 * (compteur - nbAlignToWin + 1));
+
+
+	return max(0, adj * (compteur - nbAlignToWin + 1));
 }
 
 
