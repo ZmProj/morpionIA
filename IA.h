@@ -17,6 +17,8 @@ private:
 	Etat *etat_;
 	std::pair<int, int> coupJoue;
 	std::pair<int, int> lastCoupJoueur;
+	int N_;
+	int nbAlignToWin_;
 
 
 public:
@@ -42,7 +44,6 @@ public:
 	int valeurMinMax(std::vector<std::vector <Square > > square, bool ordi_joue, int prof, int profMax, std::pair<int, int>);
 	void jouerCoup(std::vector<std::vector <Square> > &pos_next, std::vector<std::vector <Square> > &pos_courante, bool, std::pair<int, int> coup);
 	int comptePions(std::vector<std::vector <Square> > &jeu);
-	int estimation(std::vector<std::vector <Square> > &square);
 	int analyse(std::vector<std::vector <Square> > &square, bool);
 	void setLastCoupJoueur(int x, int y);
 	void appliqueCouleur(std::vector<std::vector <Square > > &square, std::pair<int, int> coup);
