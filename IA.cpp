@@ -43,13 +43,8 @@ void IA::iaRandom(){
 	(*etat_) = Etat::END_TURN;
 
 	if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == type){
-		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
 	}
-	else if ((*gameManagement_).verifVainqueur(casesLibres[aleaNumber].first, casesLibres[aleaNumber].second, *square_) == ((type + 1) % 2)){
-		std::cout << "pas encore gagne" << std::endl;
-	}
-
 }
 
 void IA::iaMinMax(){
@@ -63,11 +58,7 @@ void IA::iaMinMax(){
 	(*etat_) = Etat::END_TURN;
 
 	if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == type){
-		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
-	}
-	else if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == ((type + 1) % 2)){
-		std::cout << "pas encore gagne" << std::endl;
 	}
 }
 
@@ -80,11 +71,7 @@ void IA::iaAlphaBeta(){
 	(*etat_) = Etat::END_TURN;
 
 	if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == type){
-		std::cout << "IA WIN !" << std::endl;
 		(*etat_) = Etat::END_GAME;
-	}
-	else if ((*gameManagement_).verifVainqueur(coupJoue.first, coupJoue.second, *square_) == ((type + 1) % 2)){
-		std::cout << "pas encore gagne" << std::endl;
 	}
 }
 
@@ -92,8 +79,8 @@ void IA::iaAlphaBeta(){
 std::vector<std::pair<int, int>> IA::coupJouables(std::vector<std::vector <Square > > &square) const{
 	typedef std::pair<int, int> intPair;
 	std::vector<std::pair<int, int>> coupJouables;
-	for (int i = 0; i < N_; i++){
-		for (int j = 0; j < N_; j++){
+	for (int i = 0; i < square.size(); i++){
+		for (int j = 0; j < square.size(); j++){
 			if (square[j][i].getClickedBy() == -1){
 				coupJouables.push_back(intPair(j, i));
 			}
